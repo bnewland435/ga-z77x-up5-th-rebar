@@ -2,7 +2,7 @@
 
 Research on enabling an 8 GiB VRAM BAR for a Gigabyte Radeon RX 9060 XT 8 GB on Bruce's Ubuntu computer, Pepper.
 
-**Status, October 2, 2026: static analysis and Linux test archive completed. Boot test pending. No successful large BAR, performance gain, or modified BIOS flash has been demonstrated.**
+**Status, October 2, 2026: successful Ubuntu boot with an 8 GB BAR confirmed on kernel 7.0.0-38-generic using the DSDT override and `pci=realloc`. No BIOS flash or ReBarDxe insertion was needed. Stability, performance comparisons, and persistence remain pending.**
 
 ## System
 
@@ -18,11 +18,11 @@ Research on enabling an 8 GiB VRAM BAR for a Gigabyte Radeon RX 9060 XT 8 GB on 
 
 ## Findings
 
-The GPU explicitly advertises BAR 0 sizes of 256 MB, 512 MB, 1 GB, 2 GB, 4 GB, and 8 GB. Its current BAR 0 is 256 MB. BAR 2 is 2 MB and has its own independent size capabilities. The amdgpu log reports 8144 MB VRAM and a 256 MB BAR. Enlarging a BAR does not add VRAM.
+The GPU explicitly advertises BAR 0 sizes of 256 MB, 512 MB, 1 GB, 2 GB, 4 GB, and 8 GB. Before the test, BAR 0 was 256 MB; after the test it is 8 GB. BAR 2 is 2 MB and has its own independent size capabilities. The successful test's amdgpu log reports 8144 MB VRAM and an 8192 MB BAR. Enlarging a BAR does not add VRAM.
 
 The supplied F12 candidate contains an Above 4G Decoding setup question in the `Setup` variable at offset `0x03`, with disabled=0 and enabled=1. This is a static IFR finding, not verification of its runtime value or effect. UEFI boot does not prove CSM is disabled. Do not write a setup variable using a generic command without checking the variable identity and firmware.
 
-Its decompressed PCI modules contain exact matches for published ReBarUEFI patch patterns. The active DSDT contains a conditional high memory window with a fixed 16 GiB length. Current kernel root-bus logs advertise no memory window above 4 GiB.
+Its decompressed PCI modules contain exact matches for published ReBarUEFI patch patterns. The active DSDT contains a conditional high memory window with a fixed 16 GiB length. Baseline kernel logs advertised no memory window above 4 GiB. The override boot advertises `0x850600000–0xfffffffff`.
 
 See [firmware analysis](docs/firmware-analysis.md), [DSDT changes](docs/dsdt-analysis.md), and [one-boot test](docs/boot-test.md).
 
@@ -37,11 +37,11 @@ Full SPI firmware images are excluded: they can contain machine-specific identif
 
 ## Next steps
 
-1. Test the separate initramfs with a one-time GRUB edit.
-2. Confirm that the override loaded and a high PCI memory window appeared.
-3. Confirm whether BAR 0 becomes 8 GB and that the GPU and other devices function.
-4. If allocation fails, inspect complete boot logs and bridge windows before changing anything further.
-5. Only consider firmware patches after verifying the running SPI image and a recovery path. Preserve ME, descriptor, and GbE changes.
+1. Check normal graphics, video, USB, audio, networking, storage, and a GPU workload.
+2. Inspect kernel logs for GPU faults, resets, or PCI errors.
+3. Make the successful Linux override persistent with a recoverable normal boot path after stability checks.
+4. Measure performance separately; no improvement has yet been established.
+5. Firmware modification is unnecessary for the demonstrated Linux result.
 
 ## Sources
 
@@ -52,4 +52,4 @@ Full SPI firmware images are excluded: they can contain machine-specific identif
 - [Ivy Bridge USB patch](https://github.com/xCuri0/ReBarUEFI/blob/master/UEFIPatch/IvyUSB3.txt)
 - [Linux ACPI initrd table override](https://docs.kernel.org/admin-guide/acpi/initrd_table_override.html)
 
-Patch-pattern matches and successful AML decoding are not hardware validation. This override advertises address space; it does not itself prove chipset routing, bridge allocation, or driver resizing will succeed.
+[Recorded boot evidence](docs/boot-test.md#successful-boot-october-2-2026) confirms table loading, a high root window, and an 8 GB BAR on this system. Long-term stability, other systems, and performance gains are not yet validated.
