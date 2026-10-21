@@ -2,7 +2,7 @@
 
 Research on enabling an 8 GiB VRAM BAR for a Gigabyte Radeon RX 9060 XT 8 GB on Bruce's Ubuntu computer, Pepper.
 
-**Status, October 2, 2026: successful Ubuntu boot with an 8 GB BAR confirmed on kernel 7.0.0-38-generic using the DSDT override and `pci=realloc`. No BIOS flash or ReBarDxe insertion was needed. Stability, performance comparisons, and persistence remain pending.**
+**Status, October 21, 2026: stability testing has concluded. Bruce reports Pepper is stable following the Resizable BAR changes. The previously documented 8 GB BAR was enabled on kernel 7.0.0-38-generic using the DSDT override and `pci=realloc`, without an additional BIOS flash or ReBarDxe insertion. This is an owner-reported stability result for this system; a measured performance improvement has not been established.**
 
 ## System
 
@@ -35,13 +35,11 @@ See [firmware analysis](docs/firmware-analysis.md), [DSDT changes](docs/dsdt-ana
 
 Full SPI firmware images are excluded: they can contain machine-specific identifiers, configuration, and vendor firmware. The supplied firmware's identity and analysis are recorded instead.
 
-## Next steps
+## Testing concluded: stable
 
-1. Check normal graphics, video, USB, audio, networking, storage, and a GPU workload.
-2. Inspect kernel logs for GPU faults, resets, or PCI errors.
-3. Make the successful Linux override persistent with a recoverable normal boot path after stability checks.
-4. Measure performance separately; no improvement has yet been established.
-5. Firmware modification is unnecessary for the demonstrated Linux result.
+On October 21, 2026, Bruce reported that testing following the Resizable BAR changes has concluded and the system is stable. This closes the stability-testing item for Pepper's documented GA-Z77X-UP5 TH / RX 9060 XT configuration.
+
+The original boot evidence and test procedure are retained in [the test record](docs/boot-test.md). The completion report does not include a new kernel-log capture, an itemized peripheral or suspend/resume test matrix, or a controlled before/after benchmark. Performance comparisons remain separate from the reported stability result. Results on other systems remain unvalidated.
 
 ## Sources
 
@@ -52,4 +50,4 @@ Full SPI firmware images are excluded: they can contain machine-specific identif
 - [Ivy Bridge USB patch](https://github.com/xCuri0/ReBarUEFI/blob/master/UEFIPatch/IvyUSB3.txt)
 - [Linux ACPI initrd table override](https://docs.kernel.org/admin-guide/acpi/initrd_table_override.html)
 
-[Recorded boot evidence](docs/boot-test.md#successful-boot-october-2-2026) confirms table loading, a high root window, and an 8 GB BAR on this system. Long-term stability, other systems, and performance gains are not yet validated.
+[Recorded boot evidence](docs/boot-test.md#successful-boot-october-2-2026) confirms table loading, a high root window, and an 8 GB BAR on this system. Stability testing is now concluded as stable according to Bruce's October 21 report. Other systems and performance gains remain unvalidated.
