@@ -1,6 +1,6 @@
 # One-time Ubuntu test
 
-Status: successful override boot and 8 GB BAR confirmed October 2, 2026 at approximately 23:29 America/Chicago. Stability and persistence remain pending.
+Status: successful override boot and 8 GB BAR confirmed October 2, 2026 at approximately 23:29 America/Chicago. Stability testing was subsequently concluded as stable by Bruce on October 21, 2026; see the completion report below.
 
 This experimental file is specific to Pepper's supplied active DSDT. It is not a general Z77 override. A static check cannot establish that hardware forwards the advertised address range correctly. Failure may appear as an unsuccessful resize, missing devices, or a failed Linux boot.
 
@@ -62,7 +62,7 @@ This confirms that Linux loaded revision 0x13 of the DSDT, advertised the high w
 
 The desktop booted and Bruce returned terminal output. Extended GPU load, peripheral checks, suspend/resume, subsequent boots, persistence, and performance comparisons have not yet been reported. This success is specific to the tested combination.
 
-### Pending stability checks
+### Original stability-check procedure (historical)
 
 Use normal desktop graphics and video, check USB/audio/network/storage, and run a familiar GPU workload for 10–15 minutes. Then inspect:
 
@@ -71,4 +71,10 @@ sudo dmesg | grep -Ei 'amdgpu.*(error|fail|timeout|reset|fault)|AER:|PCIe Bus Er
 sudo lspci -vv -s 03:00.0 | grep -A3 'Physical Resizable BAR'
 ```
 
-No persistence changes have been made; a normal reboot without the test edits returns to the original setup.
+At the time of the original one-boot test, no persistence changes had been made; the interactive GRUB edits applied only to that boot.
+
+## Stability testing concluded: October 21, 2026
+
+Bruce reports that testing following the Resizable BAR changes has concluded and Pepper is stable. This completes the stability-testing phase for the documented GA-Z77X-UP5 TH and Radeon RX 9060 XT 8 GB system.
+
+This is an owner-reported operational result. The October 2 boot evidence above remains the recorded confirmation of the 8 GB BAR. No new diagnostic logs, itemized peripheral or suspend/resume results, or controlled performance comparisons accompany the completion report. No performance gain or validation on other systems is claimed.
