@@ -41,6 +41,11 @@ On October 21, 2026, Bruce reported that testing following the Resizable BAR cha
 
 The original boot evidence and test procedure are retained in [the test record](docs/boot-test.md). The completion report does not include a new kernel-log capture, an itemized peripheral or suspend/resume test matrix, or a controlled before/after benchmark. Performance comparisons remain separate from the reported stability result. Results on other systems remain unvalidated.
 
+
+### Mining test result
+
+Bruce also reports that MoneroOcean/MOM mining testing has concluded: the previously observed mining crashes on the Radeon RX 9060 XT 8 GB have been eliminated following the ReBAR changes. This is the observed outcome on Pepper's tested configuration, rather than a claim about all 8 GB cards or an isolated proof of root cause.
+
 ## Sources
 
 - [ReBarUEFI](https://github.com/xCuri0/ReBarUEFI)
