@@ -78,3 +78,7 @@ At the time of the original one-boot test, no persistence changes had been made;
 Bruce reports that testing following the Resizable BAR changes has concluded and Pepper is stable. This completes the stability-testing phase for the documented GA-Z77X-UP5 TH and Radeon RX 9060 XT 8 GB system.
 
 This is an owner-reported operational result. The October 2 boot evidence above remains the recorded confirmation of the 8 GB BAR. No new diagnostic logs, itemized peripheral or suspend/resume results, or controlled performance comparisons accompany the completion report. No performance gain or validation on other systems is claimed.
+
+### MoneroOcean/MOM mining tests concluded
+
+As part of the October 21, 2026 completion report, Bruce confirms that MoneroOcean/MOM mining tests have also concluded and that the previous mining crashes on the Radeon RX 9060 XT 8 GB have been eliminated following the ReBAR changes. This records the owner's observed result on Pepper. No exact test duration, new crash logs, or controlled isolation of ReBAR from other software changes was supplied with this report.
